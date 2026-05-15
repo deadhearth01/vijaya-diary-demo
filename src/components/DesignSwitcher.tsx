@@ -74,9 +74,9 @@ export default function DesignSwitcher({ current }: { current: DesignTier["id"] 
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 40, opacity: 0 }}
               transition={{ type: "spring", damping: 28, stiffness: 260 }}
-              className="absolute inset-x-2 bottom-2 mx-auto max-w-5xl rounded-3xl border border-vijaya-border bg-vijaya-milk p-5 shadow-card sm:inset-x-4 sm:p-7"
+              className="absolute inset-x-2 bottom-2 mx-auto flex max-h-[85dvh] max-w-5xl flex-col overflow-y-auto overscroll-contain rounded-3xl border border-vijaya-border bg-vijaya-milk p-5 shadow-card sm:inset-x-4 sm:max-h-[88vh] sm:p-7"
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="sticky top-0 z-10 -mx-5 -mt-5 flex items-start justify-between gap-4 border-b border-vijaya-border/60 bg-vijaya-milk px-5 pb-3 pt-5 sm:-mx-7 sm:-mt-7 sm:px-7 sm:pt-7">
                 <div>
                   <p
                     className="text-[11px] font-medium uppercase tracking-[0.18em]"
@@ -93,7 +93,7 @@ export default function DesignSwitcher({ current }: { current: DesignTier["id"] 
                 </div>
                 <button
                   onClick={() => setOpen(false)}
-                  className="rounded-full border border-vijaya-border bg-white px-3 py-1.5 text-xs font-medium text-vijaya-ink/70 hover:bg-vijaya-sand"
+                  className="shrink-0 rounded-full border border-vijaya-border bg-white px-3 py-1.5 text-xs font-medium text-vijaya-ink/70 hover:bg-vijaya-sand"
                 >
                   Close ✕
                 </button>
