@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
@@ -233,14 +232,16 @@ export default function Hero() {
         className="absolute inset-0 -z-10 will-change-transform"
         style={{ transformOrigin: "center" }}
       >
-        <Image
-          src="/v4/hero-krishna.png"
-          alt=""
-          fill
-          priority
+        <video
+          src="/v4/hero-krishna.mp4"
+          poster="/v4/hero-krishna.png"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
           aria-hidden
-          sizes="100vw"
-          className="object-cover object-right opacity-90"
+          className="absolute inset-0 h-full w-full object-cover object-right opacity-90"
         />
       </div>
       <div

@@ -14,7 +14,6 @@ const VERSE = [
 
 export default function FounderQuote() {
   const root = useRef<HTMLDivElement>(null);
-  const bg = useRef<HTMLDivElement>(null);
   const verseList = useRef<HTMLOListElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const sigCard = useRef<HTMLDivElement>(null);
@@ -63,31 +62,6 @@ export default function FounderQuote() {
           scrollTrigger: { trigger: heading.current!, start: "top 90%", once: true },
         },
       );
-
-      gsap.fromTo(
-        bg.current,
-        { scale: 1.25, x: -20, y: -10 },
-        {
-          scale: 1,
-          x: 0,
-          y: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: root.current!,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        },
-      );
-
-      gsap.to(bg.current, {
-        filter: "brightness(1.08) saturate(1.1)",
-        duration: 6,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-      });
 
       const items = verseList.current?.querySelectorAll<HTMLElement>("li") ?? [];
       items.forEach((li, i) => {
@@ -162,16 +136,14 @@ export default function FounderQuote() {
       ref={root}
       className="relative isolate overflow-hidden bg-vijaya-paperFlag"
     >
-      <div ref={bg} className="absolute inset-0 -z-10 will-change-transform">
-        <Image
-          src="/v4/founder-village.png"
-          alt=""
-          fill
-          aria-hidden
-          sizes="100vw"
-          className="object-cover object-right"
-        />
-      </div>
+      <Image
+        src="/v4/founder-village.png"
+        alt=""
+        fill
+        aria-hidden
+        sizes="100vw"
+        className="absolute inset-0 -z-10 object-cover object-right"
+      />
       <div
         aria-hidden
         className="absolute inset-0 -z-10"
