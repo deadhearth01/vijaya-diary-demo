@@ -243,34 +243,54 @@ export default function Products() {
 
       const chars = headingEl.querySelectorAll<HTMLElement>("[data-ch]");
 
-      gsap.from(badge.current, {
-        y: 16,
-        opacity: 0,
-        duration: 0.5,
-        ease: "power3.out",
-        scrollTrigger: { trigger: root.current!, start: "top 80%", once: true },
-      });
+      gsap.fromTo(
+        badge.current,
+        { y: 16, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power3.out",
+          clearProps: "transform,opacity",
+          scrollTrigger: { trigger: root.current!, start: "top 95%", once: true },
+        },
+      );
 
-      gsap.from(chars, {
-        yPercent: 110,
-        opacity: 0,
-        duration: 0.7,
-        ease: "expo.out",
-        stagger: 0.014,
-        scrollTrigger: { trigger: headingEl, start: "top 82%", once: true },
-      });
+      gsap.fromTo(
+        chars,
+        { yPercent: 110, opacity: 0 },
+        {
+          yPercent: 0,
+          opacity: 1,
+          duration: 0.7,
+          ease: "expo.out",
+          stagger: 0.014,
+          clearProps: "transform,opacity",
+          scrollTrigger: { trigger: headingEl, start: "top 95%", once: true },
+        },
+      );
 
-      gsap.from([teLine.current, intro.current], {
-        y: 18,
-        opacity: 0,
-        duration: 0.6,
-        ease: "power3.out",
-        stagger: 0.1,
-        scrollTrigger: { trigger: headingEl, start: "top 80%", once: true },
-      });
+      gsap.fromTo(
+        [teLine.current, intro.current],
+        { y: 18, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: "power3.out",
+          stagger: 0.1,
+          clearProps: "transform,opacity",
+          scrollTrigger: { trigger: headingEl, start: "top 95%", once: true },
+        },
+      );
     }, root);
 
-    return () => ctx.revert();
+    const refreshId = window.setTimeout(() => ScrollTrigger.refresh(), 300);
+
+    return () => {
+      window.clearTimeout(refreshId);
+      ctx.revert();
+    };
   }, []);
 
   useEffect(() => {
@@ -279,15 +299,20 @@ export default function Products() {
     const id = requestAnimationFrame(() => {
       const cards = root.current!.querySelectorAll<HTMLElement>("[data-anim-card]");
       if (!cards.length) return;
-      gsap.from(cards, {
-        y: 56,
-        opacity: 0,
-        rotateX: -14,
-        duration: 0.9,
-        ease: "power3.out",
-        stagger: 0.08,
-        scrollTrigger: { trigger: cards[0], start: "top 92%", once: true },
-      });
+      gsap.fromTo(
+        cards,
+        { y: 56, opacity: 0, rotateX: -14 },
+        {
+          y: 0,
+          opacity: 1,
+          rotateX: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          stagger: 0.08,
+          clearProps: "opacity",
+          scrollTrigger: { trigger: cards[0], start: "top 95%", once: true },
+        },
+      );
     });
     return () => cancelAnimationFrame(id);
   }, [active]);

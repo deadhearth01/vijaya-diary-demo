@@ -47,15 +47,22 @@ export default function FounderQuote() {
         line.innerHTML = wrapped;
       });
 
-      const words = headingEl.querySelectorAll<HTMLElement>("[data-word]");
-      gsap.from(words, {
-        yPercent: 110,
-        opacity: 0,
-        duration: 0.9,
-        ease: "expo.out",
-        stagger: 0.06,
-        scrollTrigger: { trigger: heading.current!, start: "top 80%", once: true },
-      });
+      const words = Array.from(
+        headingEl.querySelectorAll<HTMLElement>("[data-word]"),
+      );
+      gsap.fromTo(
+        words,
+        { yPercent: 110, opacity: 0 },
+        {
+          yPercent: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: "expo.out",
+          stagger: 0.06,
+          clearProps: "transform,opacity",
+          scrollTrigger: { trigger: heading.current!, start: "top 90%", once: true },
+        },
+      );
 
       gsap.fromTo(
         bg.current,
@@ -94,7 +101,8 @@ export default function FounderQuote() {
             duration: 0.6,
             delay: i * 0.08,
             ease: "power3.out",
-            scrollTrigger: { trigger: verseList.current!, start: "top 78%", once: true },
+            clearProps: "transform,opacity,filter",
+            scrollTrigger: { trigger: verseList.current!, start: "top 90%", once: true },
           },
         );
       });
@@ -108,29 +116,45 @@ export default function FounderQuote() {
             scaleY: 1,
             duration: 1.2,
             ease: "power2.out",
-            scrollTrigger: { trigger: verseList.current!, start: "top 80%", once: true },
+            clearProps: "transform",
+            scrollTrigger: { trigger: verseList.current!, start: "top 92%", once: true },
           },
         );
       }
 
-      gsap.from(body.current, {
-        y: 24,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: { trigger: body.current!, start: "top 85%", once: true },
-      });
+      gsap.fromTo(
+        body.current,
+        { y: 24, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          clearProps: "transform,opacity",
+          scrollTrigger: { trigger: body.current!, start: "top 95%", once: true },
+        },
+      );
 
-      gsap.from(sigCard.current, {
-        x: -30,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: { trigger: sigCard.current!, start: "top 85%", once: true },
-      });
+      gsap.fromTo(
+        sigCard.current,
+        { x: -30, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          clearProps: "transform,opacity",
+          scrollTrigger: { trigger: sigCard.current!, start: "top 95%", once: true },
+        },
+      );
     }, root);
 
-    return () => ctx.revert();
+    const refreshId = window.setTimeout(() => ScrollTrigger.refresh(), 300);
+
+    return () => {
+      window.clearTimeout(refreshId);
+      ctx.revert();
+    };
   }, []);
 
   return (

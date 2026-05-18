@@ -49,20 +49,36 @@ export default function Hero() {
       const chars = headingEl.querySelectorAll<HTMLElement>("[data-ch]");
       const trustPills = pills.current?.querySelectorAll<HTMLElement>("span") ?? [];
 
+      const ctaChildren = ctaRow.current
+        ? Array.from(ctaRow.current.children) as HTMLElement[]
+        : [];
+
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-      tl.from(badge.current, { y: 18, opacity: 0, duration: 0.55 })
-        .from(
+      tl.fromTo(badge.current, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, clearProps: "transform" })
+        .fromTo(
           chars,
-          { yPercent: 110, opacity: 0, duration: 0.85, stagger: 0.012, ease: "expo.out" },
+          { yPercent: 110, opacity: 0 },
+          { yPercent: 0, opacity: 1, duration: 0.85, stagger: 0.012, ease: "expo.out", clearProps: "transform" },
           "-=0.25",
         )
-        .from(teLine.current, { y: 18, opacity: 0, duration: 0.5 }, "-=0.55")
-        .from(body.current, { y: 18, opacity: 0, duration: 0.5 }, "-=0.35")
-        .from(ctaRow.current?.children ?? [], { y: 20, opacity: 0, duration: 0.5, stagger: 0.08 }, "-=0.3")
-        .from(trustPills, { y: 14, opacity: 0, duration: 0.45, stagger: 0.06 }, "-=0.25")
-        .from(
+        .fromTo(teLine.current, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, clearProps: "transform" }, "-=0.55")
+        .fromTo(body.current, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, clearProps: "transform" }, "-=0.35")
+        .fromTo(
+          ctaChildren,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, stagger: 0.08, clearProps: "opacity" },
+          "-=0.3",
+        )
+        .fromTo(
+          trustPills,
+          { y: 14, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.45, stagger: 0.06, clearProps: "transform,opacity" },
+          "-=0.25",
+        )
+        .fromTo(
           badge60.current,
-          { scale: 0.6, rotate: -20, opacity: 0, duration: 0.7, ease: "back.out(1.7)" },
+          { scale: 0.6, rotate: -20, opacity: 0 },
+          { scale: 1, rotate: 0, opacity: 1, duration: 0.7, ease: "back.out(1.7)" },
           "-=0.55",
         );
 
@@ -190,7 +206,12 @@ export default function Hero() {
       };
     }, root);
 
-    return () => ctx.revert();
+    const refreshId = window.setTimeout(() => ScrollTrigger.refresh(), 300);
+
+    return () => {
+      window.clearTimeout(refreshId);
+      ctx.revert();
+    };
   }, []);
 
   return (

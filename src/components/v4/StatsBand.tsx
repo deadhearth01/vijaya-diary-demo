@@ -98,17 +98,24 @@ export default function StatsBand() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray<HTMLElement>("[data-stat]");
+      const cards = Array.from(
+        root.current!.querySelectorAll<HTMLElement>("[data-stat]"),
+      );
 
-      gsap.from(cards, {
-        y: 52,
-        opacity: 0,
-        rotateX: -18,
-        duration: 0.9,
-        ease: "power3.out",
-        stagger: 0.12,
-        scrollTrigger: { trigger: root.current!, start: "top 82%", once: true },
-      });
+      gsap.fromTo(
+        cards,
+        { y: 52, opacity: 0, rotateX: -18 },
+        {
+          y: 0,
+          opacity: 1,
+          rotateX: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          stagger: 0.12,
+          clearProps: "transform,opacity",
+          scrollTrigger: { trigger: root.current!, start: "top 95%", once: true },
+        },
+      );
 
       cards.forEach((card) => {
         const numEl = card.querySelector<HTMLElement>("[data-num]");
@@ -150,7 +157,12 @@ export default function StatsBand() {
       });
     }, root);
 
-    return () => ctx.revert();
+    const refreshId = window.setTimeout(() => ScrollTrigger.refresh(), 250);
+
+    return () => {
+      window.clearTimeout(refreshId);
+      ctx.revert();
+    };
   }, []);
 
   return (
