@@ -76,20 +76,10 @@ export default function Hero() {
         )
         .fromTo(
           badge60.current,
-          { scale: 0.6, rotate: -20, opacity: 0 },
-          { scale: 1, rotate: 0, opacity: 1, duration: 0.7, ease: "back.out(1.7)" },
+          { opacity: 0 },
+          { opacity: 1, duration: 0.5, ease: "power2.out", clearProps: "opacity" },
           "-=0.55",
         );
-
-      gsap.to(badge60.current, {
-        y: -12,
-        rotate: 4,
-        duration: 3,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-        delay: 1.2,
-      });
 
       const counterObj = { v: 0 };
       gsap.to(counterObj, {
@@ -115,18 +105,6 @@ export default function Hero() {
 
       gsap.to(bgImg.current, {
         yPercent: 18,
-        ease: "none",
-        scrollTrigger: {
-          trigger: root.current!,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(badge60.current, {
-        yPercent: 60,
-        rotate: 18,
         ease: "none",
         scrollTrigger: {
           trigger: root.current!,
