@@ -114,18 +114,6 @@ export default function Hero() {
         },
       });
 
-      gsap.to([badge.current, heading.current, teLine.current, body.current, ctaRow.current, pills.current], {
-        y: -40,
-        opacity: 0.4,
-        ease: "none",
-        scrollTrigger: {
-          trigger: root.current!,
-          start: "top top",
-          end: "bottom 30%",
-          scrub: true,
-        },
-      });
-
       gsap.to(scrollCue.current, {
         opacity: 0,
         y: 30,
@@ -138,16 +126,10 @@ export default function Hero() {
         },
       });
 
-      const moveBg = gsap.quickTo(bgImg.current, "x", { duration: 0.9, ease: "power2.out" });
-      const moveBgY = gsap.quickTo(bgImg.current, "y", { duration: 0.9, ease: "power2.out" });
       const moveGlow = gsap.quickTo(glow.current, "x", { duration: 0.5, ease: "power3.out" });
       const moveGlowY = gsap.quickTo(glow.current, "y", { duration: 0.5, ease: "power3.out" });
       const onMove = (e: MouseEvent) => {
         const r = root.current!.getBoundingClientRect();
-        const nx = (e.clientX - r.left) / r.width - 0.5;
-        const ny = (e.clientY - r.top) / r.height - 0.5;
-        moveBg(nx * -34);
-        moveBgY(ny * -22);
         moveGlow(e.clientX - r.left);
         moveGlowY(e.clientY - r.top);
       };
